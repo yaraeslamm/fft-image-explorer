@@ -3,15 +3,14 @@
 **X-Ray Vision** is an interactive tool that reveals the **hidden waves** inside any image using the **2D Fourier Transform (FFT)**.  
 Upload a picture → instantly see how different frequency components shape the image.
 
-This project is built for educational and visualization purposes, and is especially relevant to **Image Processing & Computer Vision** students.
 
 ---
 
-## 🚀 Try It Locally
+## Try It Locally
 
 1. Clone the repo:
    ```python
-   git clone https://github.com/YOURUSERNAME/xray-vision.git
+   git clone https://github.com/yaraeslamm/x-ray-vision.git
    cd xray-vision
    ```
 2. Install dependencies:
@@ -68,7 +67,6 @@ This project demonstrates fundamental concepts used in:
 - Astronomy
 - Denoising & restoration
 
-It is an excellent educational tool and portfolio project because it shows practical understanding of frequency-domain image analysis.
 
 ---
 

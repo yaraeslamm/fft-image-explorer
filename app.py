@@ -6,6 +6,18 @@ import gradio as gr
 # STEP 1 — Compute frequency waves (FFT)
 # ---------------------------------------------------------
 def compute_fft(gray):
+    """
+    Computes the Fast Fourier Transform (FFT) of a grayscale image.
+    
+    Args:
+        gray (numpy.ndarray): Grayscale image represented as a 2D NumPy array.
+        
+    Returns:
+        tuple: A tuple containing:
+            - fshift (numpy.ndarray): Shifted FFT of the grayscale image.
+            - magnitude (numpy.ndarray): Logarithmic magnitude spectrum of the FFT.
+    """
+
     f = np.fft.fft2(gray)
     fshift = np.fft.fftshift(f)
 
@@ -19,6 +31,18 @@ def compute_fft(gray):
 # STEP 2 — Create filters (low-pass, high-pass, band-pass)
 # ---------------------------------------------------------
 def create_filter(shape, filter_type, cutoff, bandwidth):
+    """
+    Creates a frequency domain filter (low-pass, high-pass, or band-pass).
+    
+    Args:
+        shape (tuple): Shape of the image (height, width).
+        filter_type (str): Type of filter. One of "Low-pass", "High-pass", or "Band-pass".
+        cutoff (float): Cutoff frequency in pixels (for low-pass and high-pass).
+        bandwidth (float): Bandwidth for band-pass filter.
+        
+    Returns:
+        numpy.ndarray: The generated frequency filter mask.
+    """
     rows, cols = shape
     crow, ccol = rows // 2, cols // 2
 
@@ -44,6 +68,22 @@ def create_filter(shape, filter_type, cutoff, bandwidth):
 # STEP 3 — Apply filter in frequency domain
 # ---------------------------------------------------------
 def apply_filter(img, filter_type, cutoff, bandwidth):
+    """
+    Applies a frequency domain filter to an image using FFT.
+    
+    Args:
+        img (numpy.ndarray): Input image in BGR format (NumPy array).
+        filter_type (str): Type of filter to apply ("Low-pass", "High-pass", or "Band-pass").
+        cutoff (float): Cutoff frequency for the filter.
+        bandwidth (float): Bandwidth for the band-pass filter.
+        
+    Returns:
+        tuple: A tuple containing:
+            - img (numpy.ndarray): The original image.
+            - magnitude (numpy.ndarray): Magnitude spectrum of the FFT.
+            - mask_vis (numpy.ndarray): Visual representation of the frequency mask.
+            - img_back (numpy.ndarray): The filtered image obtained after applying the inverse FFT.
+    """
 
     # convert to grayscale
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)
@@ -73,6 +113,22 @@ def apply_filter(img, filter_type, cutoff, bandwidth):
 # STEP 4 — UI function
 # ---------------------------------------------------------
 def process(img, filter_type, cutoff, bandwidth):
+    """
+    Processes the uploaded image based on the selected filter type and parameters.
+    
+    Args:
+        img (numpy.ndarray): The uploaded image (NumPy array).
+        filter_type (str): Type of filter ("Low-pass", "High-pass", or "Band-pass").
+        cutoff (float): Cutoff frequency for the filter.
+        bandwidth (float): Bandwidth for the band-pass filter.
+        
+    Returns:
+        tuple: A tuple containing:
+            - img (numpy.ndarray): Original image.
+            - magnitude (numpy.ndarray): Magnitude of the FFT.
+            - mask_vis (numpy.ndarray): Visual representation of the filter mask.
+            - img_back (numpy.ndarray): The filtered image after applying the filter.
+    """
     return apply_filter(img, filter_type, cutoff, bandwidth)
 
 
