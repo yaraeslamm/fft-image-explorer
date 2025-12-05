@@ -69,7 +69,7 @@ def create_filter(shape, filter_type, cutoff, bandwidth):
 # ---------------------------------------------------------
 def apply_filter(img, filter_type, cutoff, bandwidth):
     """
-    Applies a frequency domain filter to an image using FFT.
+    Applies a frequency domain filter to each color channel (RGB) of an image using FFT.
     
     Args:
         img (numpy.ndarray): Input image in BGR format (NumPy array).
@@ -85,29 +85,43 @@ def apply_filter(img, filter_type, cutoff, bandwidth):
             - img_back (numpy.ndarray): The filtered image obtained after applying the inverse FFT.
     """
 
-    # convert to grayscale
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY).astype(np.float32)
+    # Split the image into BGR channels
+    channels = cv2.split(img)
+    
+    # Initialize a list to store the filtered channels
+    filtered_channels = []
+    
+    # Process each channel separately
+    for channel in channels:
+        # Convert to float32 for FFT (this assumes that the input is an 8-bit image)
+        gray = channel.astype(np.float32)
 
-    # FFT
-    fshift, magnitude = compute_fft(gray)
+        # Compute FFT
+        fshift, magnitude = compute_fft(gray)
 
-    # Make frequency mask
-    mask = create_filter(gray.shape, filter_type, cutoff, bandwidth)
+        # Create frequency mask
+        mask = create_filter(gray.shape, filter_type, cutoff, bandwidth)
 
-    # Multiply waves by mask
-    filtered_fft = fshift * mask
+        # Apply the filter in the frequency domain
+        filtered_fft = fshift * mask
 
-    # Inverse FFT
-    f_ishift = np.fft.ifftshift(filtered_fft)
-    img_back = np.fft.ifft2(f_ishift).real
+        # Perform inverse FFT
+        f_ishift = np.fft.ifftshift(filtered_fft)
+        img_back = np.fft.ifft2(f_ishift).real
 
-    img_back = np.clip(img_back, 0, 255).astype(np.uint8)
+        # Clip and convert back to uint8
+        img_back = np.clip(img_back, 0, 255).astype(np.uint8)
+        
+        # Append the processed channel
+        filtered_channels.append(img_back)
+    
+    # Merge the filtered channels back into a single image
+    img_back = cv2.merge(filtered_channels)
 
-    # Normalize mask for display
+    # Normalize mask for visualization (use the first channel's mask for visualization)
     mask_vis = (mask * 255).astype(np.uint8)
 
     return img, magnitude, mask_vis, img_back
-
 
 # ---------------------------------------------------------
 # STEP 4 — UI function
