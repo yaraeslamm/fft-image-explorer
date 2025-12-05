@@ -163,7 +163,7 @@ demo = gr.Interface(
         gr.Image(label="Filter Mask"),
         gr.Image(label="Filtered Output")
     ],
-    title="X-Ray Vision — Frequency Image Explorer",
+    title="Interactive Frequency-Domain Image Filter (FFT Explorer)",
     description="See the hidden waves inside your picture and change them!"
 )
 
