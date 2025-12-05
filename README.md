@@ -71,11 +71,11 @@ Replace the images below with your actual examples if you want.
 
 | Original | FFT Spectrum |
 |----------|--------------|
-| ![Original](/assets/image-1.jpeg) | ![Spectrum](/assets/image-2.jpeg.jpg) |
+| ![Original](/assets/image-1.jpeg) | ![Spectrum](/assets/image-2.jpeg) |
 
 | Filter Mask | Filtered Output |
 |-------------|-----------------|
-| ![Mask](/assets/image-3.jpeg.jpg) | ![Filtered](/assets/image-4.jpeg.jpg) |
+| ![Mask](/assets/image-3.jpeg) | ![Filtered](/assets/image-4.jpeg) |
 
 ---
 
