@@ -93,8 +93,8 @@ Replace the images below with your actual examples if you want.
 
 1. Clone the repo:
   ```bash
-git clone https://github.com/yaraeslamm/x-ray-vision.git
-cd x-ray-vision
+git clone https://github.com/yaraeslamm/fft-image-explorer.git
+cd fft-image-explorer
    ```
 2. Install dependencies:
   ```bash
