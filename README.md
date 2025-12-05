@@ -108,7 +108,7 @@ python app.py
 
 ## 📡 Live Demo
 
-
+[Try it!](https://huggingface.co/spaces/yaraa11/fft-image-explorer)
 ---
 
 ## License
